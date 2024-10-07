@@ -4,14 +4,15 @@ import { weightedValue } from "../basic"
 
 export class BaseMachine {
 	
-	constructor(probabilitySeries) {
-		this.probabilitySeries = probabilitySeries
+	constructor(probabilityArray, scoreClass) {
+		this.probabilityArray = probabilityArray
+		this.scoreClass = scoreClass
 	}
 
 	generate() {
 		let ans = []
 		for (let i = 0; i < 15; i++) {
-			ans.push(weightedValue(this.probabilitySeries))
+			ans.push(weightedValue(this.probabilityArray))
 		}
 		return ans
 	}
@@ -33,14 +34,14 @@ export class BaseMachine {
 // 0 is wild card  
 // 1,2,3,4,5 are A, 10, J, Q, K raw value of 3 below and each extra symble triples the odds
 // 6, 7, 8 are low val symbols winning squares the values
-// 9, 10 are high val symbols
-// 11 is black hole devour world minigame
+// 9, 10 are high val symbols winning squares then doubles
+// 11 is black hole devour world minigame TODO
 // 12 is eventually gonna be planet change, art and algorithm swithc up TODO
 
 
-let probabilitySeries = [66, 70, 71, 72, 73, 74, 82, 76, 70, 20, 14]
+let probabilityArray = [66, 70, 71, 72, 73, 74, 82, 76, 70, 20, 14]
 
-const machine = new BaseMachine(probabilitySeries)
+const machine = new BaseMachine(probabilityArray)
 machine.generatePrint()
 
 let scoreArray = [225, 25, 27, 29, 31, 33, 100, 150, 250, 600, 1000]
