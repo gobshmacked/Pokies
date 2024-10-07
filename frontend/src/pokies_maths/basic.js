@@ -7,7 +7,7 @@ import { BaseMachine } from "./classes/BaseMachine"
 // Returns a single random weighted value
 // PROBABILITY SERIES EXAMPLE: probabilitySeries = [100,100,100,100,100,100,100,50,50,50,50,50,20,10,1]
 
-const weightedValue = (probabilitySeries) => {
+export const weightedValue = (probabilitySeries) => {
 	if (probabilitySeries.length === 0) return -1
 
 	let sum = 0 
