@@ -17,7 +17,7 @@ export class BaseMachine {
 	}
 
 	scoring(ans) {
-
+		
 	}
 
 	generatePrint() {
@@ -29,8 +29,18 @@ export class BaseMachine {
 	}
 }
 
+// scoring details
+// 0 is wild card  
+// 1,2,3,4,5 are A, 10, J, Q, K raw value of 3 below and each extra symble triples the odds
+// 6, 7, 8 are low val symbols winning squares the values
+// 9, 10 are high val symbols
+// 11 is black hole devour world minigame
+// 12 is eventually gonna be planet change, art and algorithm swithc up TODO
 
-let testArray = [100,100,100,100,100,100,100,50,50,50,50,50,20,10,1]
 
-const machine = new BaseMachine(testArray)
+let probabilitySeries = [66, 70, 71, 72, 73, 74, 82, 76, 70, 20, 14]
+
+const machine = new BaseMachine(probabilitySeries)
 machine.generatePrint()
+
+let scoreArray = [225, 25, 27, 29, 31, 33, 100, 150, 250, 600, 1000]
