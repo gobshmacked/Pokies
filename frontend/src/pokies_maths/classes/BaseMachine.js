@@ -1,4 +1,4 @@
-import { weightedValue } from "../basic"
+import { weightedValue } from "../basic.js"
 // This object is the basic code required for a slot machine that operates solely on random numbers and a sequence of realtive probabilities for each option
 
 
@@ -11,8 +11,12 @@ export class BaseMachine {
 
 	generate() {
 		let ans = []
-		for (let i = 0; i < 15; i++) {
-			ans.push(weightedValue(this.probabilityArray))
+		for (let i = 0; i < 3; i++) {
+			let line = []
+			for (let j = 0; j < 5; j++) {
+				line.push(weightedValue(this.probabilityArray))
+			}
+			ans.push(line)
 		}
 		return ans
 	}
@@ -24,9 +28,9 @@ export class BaseMachine {
 	generatePrint() {
 		let ans = this.generate()
 		console.log('Results')
-		console.log(ans.slice(0, 5))
-		console.log(ans.slice(5, 10))
-		console.log(ans.slice(10, 15))
+		console.log(ans[0])
+		console.log(ans[1])
+		console.log(ans[2])
 	}
 }
 

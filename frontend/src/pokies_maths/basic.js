@@ -1,4 +1,4 @@
-import { BaseMachine } from "./classes/BaseMachine"
+// import { BaseMachine } from "./classes/BaseMachine"
 
 // ME messing around trying to find good way to make number sequence
 
@@ -41,11 +41,11 @@ const testWeightedValue = (calls, probabilitySeries) => {
 	}
 }
 
-testArray = [100,100,100,100,100,100,100,50,50,50,50,50,20,10,1]
+let testArray = [100,100,100,100,100,100,100,50,50,50,50,50,20,10,1]
 
 
 // OUTPUTTING TO CONSOLE BELOW HERE
 // testWeightedValue(1000000, testArray)
 // console.log(weightedValue(testArray))
-const machine = new BaseMachine(testArray)
-machine.generatePrint()
+// const machine = new BaseMachine(testArray)
+// machine.generatePrint()
