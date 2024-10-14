@@ -7,6 +7,7 @@ export class ScoreMethodA extends ScoreMethod {
 		this.scoreArray = scoreArray
 	}
 
+	// takes in the generated array of numbers and finds all the winning matches in the spin
 	calculateTotalScore(pokiesArray) {
 		let ans = 0
 		for (let line = 0; line < 3; line++) {
@@ -31,16 +32,50 @@ export class ScoreMethodA extends ScoreMethod {
 				}
 				// if there is already a combo of 3 and the combo does not continue in the next slide
 				if (ansArray.length >= 3 && (i === 4 || (pokiesArray[line][i + 1] !== target && pokiesArray[line][i + 1] !== 0))) {
-					this.calculateComboScore(pokiesArray, startRow, startCol, ansArray)
+					ans += this.calculateComboScore(pokiesArray, startRow, startCol, ansArray, target)
+					ansArray = []
+					target = -1
+					i--
 				}
 			}
 		}
 		return ans
 	}
 
-	// calculates value of particular 
-	calculateComboScore(pokiesArray, row, col, comboArray) {
-
+	// calculates value of particular combo
+	calculateComboScore(pokiesArray, row, col, comboArray, target) {
+		let ans = 0
+		if (target === -1) {
+			target = 0
+		}
+		let wildArray = []
+		for (let i = 0; i < comboArray.length; i++) {
+			if (comboArray[i] === 0) {
+				let wilds = this.wildsInCol(pokiesArray, row, col + i)
+				wildArray.push((Math.pow(2, wilds - 1)) * this.scoreArray[0])
+			}
+		}
+		switch (target) {
+			case 0:
+				return this.arraySum(wildArray)
+				break;
+			case 1:
+			case 2:
+			case 3:
+			case 4:
+			case 5:
+				ans = this.scoreArray[target] * Math.pow(3, comboArray.length - 3)
+				break;
+			case 6:
+			case 7:
+			case 8:
+				ans = this.scoreArray[target] * Math.pow(3, comboArray.length - 3)
+				break;
+			case 9:
+			case 10:
+				ans = this.scoreArray[target] * Math.pow(3, comboArray.length - 3)
+				break;
+		}
 	}
 
 	// returns the number of wilds that are next to each other in column based on the provided row and col of a wild element
@@ -59,13 +94,20 @@ export class ScoreMethodA extends ScoreMethod {
 		return count
 	}
 
+	arraySum(array) {
+		let sum = 0
+		for (let i = 0; i < array.length; i++) {
+			sum += array[i]
+		}
+	}
+
 }
 
 // scoring details
 // 0 is wild card each wild card acts as 180 takes the place of part of the value of the symbol, for better or worse. Multiple used in the same pattern results in a multiplier effec where 60 is added to value of each for each present in pattern
 // 1,2,3,4,5 are A, 10, J, Q, K raw value of 3 below and each extra symble triples the odds
-// 6, 7, 8 are low val symbols winning squares the values
-// 9, 10 are high val symbols winning squares then doubles
+// 6, 7, 8 are low val symbols winning squares the values by 1.3 then halves
+// 9, 10 are high val symbols winning puts to power of 1.5 then halves
 // 11 is black hole devour world minigame TODO
 // 12 is eventually gonna be planet change, art and algorithm swithc up TODO
 
