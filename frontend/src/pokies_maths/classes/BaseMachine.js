@@ -1,12 +1,13 @@
 import { weightedValue } from "../basic.js"
+import { ScoreMethodA } from "./ScoreMethodA.js"
 // This object is the basic code required for a slot machine that operates solely on random numbers and a sequence of realtive probabilities for each option
 
 
 export class BaseMachine {
 	
-	constructor(probabilityArray, scoreClass) {
+	constructor(probabilityArray, scoreMethod) {
 		this.probabilityArray = probabilityArray
-		this.scoreClass = scoreClass
+		this.scoreMethod = scoreMethod
 	}
 
 	generate() {
@@ -21,16 +22,13 @@ export class BaseMachine {
 		return ans
 	}
 
-	scoring(ans) {
-		
-	}
-
 	generatePrint() {
 		let ans = this.generate()
 		console.log('Results')
 		console.log(ans[0])
 		console.log(ans[1])
 		console.log(ans[2])
+		// console.log(scoreMethod.calculateTotalScore(ans))
 	}
 }
 
@@ -42,10 +40,9 @@ export class BaseMachine {
 // 11 is black hole devour world minigame TODO
 // 12 is eventually gonna be planet change, art and algorithm swithc up TODO
 
-
+let scoreArray = [180, 25, 27, 29, 31, 33, 100, 150, 250, 600, 1000]
 let probabilityArray = [66, 70, 71, 72, 73, 74, 82, 76, 70, 20, 14]
 
-const machine = new BaseMachine(probabilityArray)
+const scoreMethod = new ScoreMethodA()
+const machine = new BaseMachine(probabilityArray, scoreMethod)
 machine.generatePrint()
-
-let scoreArray = [225, 25, 27, 29, 31, 33, 100, 150, 250, 600, 1000]

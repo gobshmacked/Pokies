@@ -1,9 +1,10 @@
-import { ScoreMethod } from "./ScoreMethod";
+import { ScoreMethod } from "./ScoreMethod.js";
 
 
 export class ScoreMethodA extends ScoreMethod {
 
 	constructor(scoreArray) {
+		super()
 		this.scoreArray = scoreArray
 	}
 
@@ -69,12 +70,18 @@ export class ScoreMethodA extends ScoreMethod {
 			case 6:
 			case 7:
 			case 8:
-				ans = this.scoreArray[target] * Math.pow(3, comboArray.length - 3)
+				ans = this.powThenHalf(this.scoreArray[target], 1.3, comboArray.length - 3)
 				break;
 			case 9:
 			case 10:
-				ans = this.scoreArray[target] * Math.pow(3, comboArray.length - 3)
+				ans = this.powThenHalf(this.scoreArray[target], 1.5, comboArray.length - 3)
 				break;
+		}
+		if (wildArray.length === 0) {
+			return ans
+		} else {
+			ans = ans * ((comboArray.length - wildArray.length) / comboArray.length) + this.arraySum(wildArray)
+			return ans
 		}
 	}
 
@@ -99,6 +106,14 @@ export class ScoreMethodA extends ScoreMethod {
 		for (let i = 0; i < array.length; i++) {
 			sum += array[i]
 		}
+		return sum
+	}
+
+	powThenHalf(base, exponent, times) {
+		for (i = 0; i < times; i++) {
+			base =  Math.pow(base, exponent) / 2
+		}
+		return base
 	}
 
 }

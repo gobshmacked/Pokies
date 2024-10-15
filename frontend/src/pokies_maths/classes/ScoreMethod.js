@@ -1,5 +1,7 @@
 
 export class ScoreMethod {
-	calculateScore() {
+
+	calculateTotalScore(pokiesArray) {
+
 	}
 }
