@@ -10,4 +10,4 @@ const machine = new BaseMachine(probabilityArray, scoreMethod)
 
 // machine.printOutput(machine.generate())
 // machine.simulateWinnings(1000000)
-machine.winningsAtLeast(100, 1000000)
+machine.winningsAtLeast(200, 10000000)
