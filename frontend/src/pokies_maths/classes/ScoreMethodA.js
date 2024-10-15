@@ -40,7 +40,7 @@ export class ScoreMethodA extends ScoreMethod {
 				}
 			}
 		}
-		return Math.ceil(ans)
+		return Math.ceil(ans) / 100
 	}
 
 	// calculates value of particular combo
