@@ -1,0 +1,39 @@
+.selected {
+	background: #22305B;
+	color: white;
+	font-weight: bold;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-radius: 5px;
+	font-size: 14px;
+	border: 0px;
+}
+
+.normalButton {
+	background: #BCDBFF;
+	color: black;
+	font-weight: bold;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-radius: 5px;
+	font-size: 14px;
+	border: 0px;
+}
+
+.normalButton:hover {
+	background: #22305B;
+	color: white;
+}
+
+@media (min-width: 600px) {
+	.normalButton {
+		font-size: 20px
+	}
+	.selected {
+		font-size: 20px
+	}
+}
