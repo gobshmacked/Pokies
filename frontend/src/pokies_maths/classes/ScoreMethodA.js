@@ -40,7 +40,7 @@ export class ScoreMethodA extends ScoreMethod {
 				}
 			}
 		}
-		return ans
+		return Math.ceil(ans)
 	}
 
 	// calculates value of particular combo
@@ -56,6 +56,8 @@ export class ScoreMethodA extends ScoreMethod {
 				wildArray.push((Math.pow(2, wilds - 1)) * this.scoreArray[0])
 			}
 		}
+		// console.log(target)
+		// console.log(this.scoreArray[target])
 		switch (target) {
 			case 0:
 				return this.arraySum(wildArray)
@@ -110,7 +112,7 @@ export class ScoreMethodA extends ScoreMethod {
 	}
 
 	powThenHalf(base, exponent, times) {
-		for (i = 0; i < times; i++) {
+		for (let i = 0; i < times; i++) {
 			base =  Math.pow(base, exponent) / 2
 		}
 		return base
