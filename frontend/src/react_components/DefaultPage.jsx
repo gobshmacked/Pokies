@@ -6,54 +6,68 @@ import { ScoreMethodA } from '../pokies_maths/classes/ScoreMethodA.js'
 import './cssStyles/DefaultPage.css'
 
 export function DefaultPage(props) {
-	const [pokieNumbers, setPokieNumbers] = React.useState([0,2,2,7,6,0,4,6,9,3,10,10,6,1,0])
+	const [pokieNumbers, setPokieNumbers] = React.useState([0, 2, 2, 7, 6, 0, 4, 6, 9, 3, 10, 10, 6, 1, 0]);
+  const [delayedPokieNumbers, setDelayedPokieNumbers] = React.useState(Array(15).fill(null));
 
-	let scoreArray = [180, 25, 27, 29, 31, 33, 100, 150, 250, 600, 1000]
-	let probabilityArray = [40, 70, 71, 72, 73, 74, 82, 76, 65, 20, 14]
+  let scoreArray = [180, 25, 27, 29, 31, 33, 100, 150, 250, 600, 1000];
+  let probabilityArray = [40, 70, 71, 72, 73, 74, 82, 76, 65, 20, 14];
 
-	const scoreMethod = new ScoreMethodA(scoreArray)
-	const machine = new BaseMachine(probabilityArray, scoreMethod)
+  const scoreMethod = new ScoreMethodA(scoreArray);
+  const machine = new BaseMachine(probabilityArray, scoreMethod);
 
-	function nextPokiesNumbers (machine) {
-		let nextNumbers = machine.generate()
-		let nextNumbersFlattened = []
-		for (let i = 0; i < 3; i++) {
-			for (let j = 0; j < 5; j++) {
-				nextNumbersFlattened.push(nextNumbers[i][j])
-			}
-		}
-		setPokieNumbers(nextNumbersFlattened)
-	}
+  function nextPokiesNumbers(machine) {
+    let nextNumbers = machine.generate();
+    let nextNumbersFlattened = [];
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 5; j++) {
+        nextNumbersFlattened.push(nextNumbers[i][j]);
+      }
+    }
 
-	return (
-		<PageBox>
-			<TitleBox>
-				<Title1>Title</Title1>
-				<Title2>Second title</Title2>
-				<Title3>Third title</Title3>
-			</TitleBox>
-			<WritingBlock>
-				<Writing>Writing 1</Writing>
-				<Writing>Writing 2</Writing>
-				<Writing>Writing 3</Writing>
-				<Writing>Writing 4</Writing>
-			</WritingBlock>
-			<br/><br/><br/>
-			<PokiesScreenBlock>
-				{<AnswerGrid pokieNumbers = {pokieNumbers}/>}
-			</PokiesScreenBlock>
-			<br/><br/><br/>
-			<PokiesInteractBlock>
-				<PokiesButtonBlock>
-					<StyledButton onClick = {() => nextPokiesNumbers(machine)}/>
-				</PokiesButtonBlock>
-			</PokiesInteractBlock>
-			<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-			<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-			<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-			<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-		</PageBox>
-	)
+    // Set all images to null first
+    setDelayedPokieNumbers(Array(15).fill(null));
+
+    // Staggered update of pokie numbers
+    nextNumbersFlattened.forEach((num, index) => {
+      setTimeout(() => {
+        setDelayedPokieNumbers(prev => {
+          const newNumbers = [...prev];
+          newNumbers[index] = num;
+          return newNumbers;
+        });
+      }, ((index % 5) + 1) * 500); // Staggered delay based on index
+    });
+  }
+
+  return (
+    <PageBox>
+      <TitleBox>
+        <Title1>Title</Title1>
+        <Title2>Second title</Title2>
+        <Title3>Third title</Title3>
+      </TitleBox>
+      <WritingBlock>
+        <Writing>Writing 1</Writing>
+        <Writing>Writing 2</Writing>
+        <Writing>Writing 3</Writing>
+        <Writing>Writing 4</Writing>
+      </WritingBlock>
+      <br /><br /><br />
+      <PokiesScreenBlock>
+        <AnswerGrid pokieNumbers={delayedPokieNumbers} />
+      </PokiesScreenBlock>
+      <br /><br /><br />
+      <PokiesInteractBlock>
+        <PokiesButtonBlock>
+          <StyledButton onClick={() => nextPokiesNumbers(machine)} />
+        </PokiesButtonBlock>
+      </PokiesInteractBlock>
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    </PageBox>
+  );
 }
 
 // Material UI Styles //
