@@ -6,8 +6,7 @@ import { ScoreMethodA } from '../pokies_maths/classes/ScoreMethodA.js'
 import './cssStyles/DefaultPage.css'
 
 export function DefaultPage(props) {
-	const [pokieNumbers, setPokieNumbers] = React.useState([0, 2, 2, 7, 6, 0, 4, 6, 9, 3, 10, 10, 6, 1, 0]);
-  const [delayedPokieNumbers, setDelayedPokieNumbers] = React.useState(Array(15).fill(null));
+  const [delayedPokieNumbers, setDelayedPokieNumbers] = React.useState([5, 8, 6, 9, 6, 0, 4, 6, 9, 3, 10, 10, 6, 1, 0]);
 
   let scoreArray = [180, 25, 27, 29, 31, 33, 100, 150, 250, 600, 1000];
   let probabilityArray = [40, 70, 71, 72, 73, 74, 82, 76, 65, 20, 14];

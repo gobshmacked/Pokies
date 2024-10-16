@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { styled } from '@mui/material'
 import loadingIcon from './assets/pokie_images/12.png';
+import image0 from './assets/pokie_images/0.png';
 import image1 from './assets/pokie_images/1.png';
 import image2 from './assets/pokie_images/2.png';
 import image3 from './assets/pokie_images/3.png';
@@ -16,7 +17,7 @@ import image12 from './assets/pokie_images/12.png';
 
 
 export function AnswerGrid(props) {
-  const images = [image1, image2, image3, image4, image5, image6, image7, image8, image9, image10, image11, image12];
+  const images = [image0, image1, image2, image3, image4, image5, image6, image7, image8, image9, image10, image11, image12];
 
   return (
     <PokerMachineGrid>
@@ -25,7 +26,7 @@ export function AnswerGrid(props) {
           {icon !== null ? (
             <img src={images[icon]} alt={`Grid item ${index + 1}`} />
           ) : (
-            <img src={loadingIcon} alt="Loading" />
+            <LoadingIcon src={loadingIcon} alt="Loading" />
           )}
         </GridItem>
       ))}
@@ -49,6 +50,18 @@ const GridItem = styled('div')({
     width: '100%',
     height: '100%',
     objectFit: 'cover',
+  },
+});
+
+const LoadingIcon = styled('img')({
+  width: '100%',
+  height: '100%',
+  objectFit: 'cover',
+	borderRadius: '50%',
+  animation: 'spin 2s linear infinite',
+  '@keyframes spin': {
+    '0%': { transform: 'rotate(0deg)' },
+    '100%': { transform: 'rotate(360deg)' },
   },
 });
 
