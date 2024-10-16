@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import { Screen } from './react_components/Screen.jsx'
 

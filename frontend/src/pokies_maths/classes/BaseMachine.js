@@ -49,9 +49,10 @@ export class BaseMachine {
 	// prints the first output with 
 	winningsAtLeast(winningAmount, maxIterations) {
 		let i = 0
+		let score = 0
 		while (i < maxIterations) {
 			let ans = this.generate()
-			let score = this.scoreMethod.calculateTotalScore(ans)
+			score = this.scoreMethod.calculateTotalScore(ans)
 			if (score > winningAmount) {
 				console.log(`Score of ${score} after ${i} iterations from:`)
 				this.printOutput(ans)
