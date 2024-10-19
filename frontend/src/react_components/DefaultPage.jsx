@@ -71,13 +71,12 @@ export function DefaultPage(props) {
       </TitleBox>
       <WritingBlock>
       </WritingBlock>
-      <br /><br /><br />
+      <br /><br />
 			<PokiesInfoBlock>
 				<PokiesWriting>{spins}</PokiesWriting>
 				<PokiesWriting>{winnings}</PokiesWriting>
 				<PokiesWriting>{totalWinnings}</PokiesWriting>
 			</PokiesInfoBlock>
-			<br />
       <PokiesScreenBlock>
         <AnswerGrid pokieNumbers={delayedPokieNumbers} winningsArray={winningsArray}/>
       </PokiesScreenBlock>
@@ -137,6 +136,8 @@ const PokiesInfoBlock = styled('div')({
 	display: 'flex',
 	flexDirection: 'row',
 	justifyContent: 'space-between',
+	marginLeft: '10px',
+	marginRight: '10px',
 })
 
 const PokiesScreenBlock = styled('div')({
