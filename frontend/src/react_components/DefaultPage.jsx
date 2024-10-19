@@ -7,6 +7,9 @@ import './cssStyles/DefaultPage.css'
 
 export function DefaultPage(props) {
   const [delayedPokieNumbers, setDelayedPokieNumbers] = React.useState([5, 8, 6, 9, 6, 0, 4, 6, 9, 3, 10, 10, 6, 1, 0]);
+	const [spins, setSpins] = React.useState(0)
+	const [winnings, setWinnings] = React.useState(0)
+	const [totalWinnings, setTotalWinnings] = React.useState(0)
 
   let scoreArray = [180, 25, 27, 29, 31, 33, 100, 150, 250, 600, 1000];
   let probabilityArray = [40, 70, 71, 72, 73, 74, 82, 76, 65, 20, 14];
@@ -16,6 +19,12 @@ export function DefaultPage(props) {
 
   function nextPokiesNumbers(machine) {
     let nextNumbers = machine.generate();
+		let amountWon = machine.winnings(nextNumbers)
+		let totalWin = totalWinnings + amountWon - 1
+		if (totalWin % 1 !== 0) totalWin = parseFloat(totalWin.toFixed(2))
+		setSpins(spins + 1)
+		setWinnings(amountWon)
+		setTotalWinnings(totalWin)
     let nextNumbersFlattened = [];
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 5; j++) {
@@ -52,6 +61,12 @@ export function DefaultPage(props) {
         <Writing>Writing 4</Writing>
       </WritingBlock>
       <br /><br /><br />
+			<PokiesInfoBlock>
+				<PokiesWriting>{spins}</PokiesWriting>
+				<PokiesWriting>{winnings}</PokiesWriting>
+				<PokiesWriting>{totalWinnings}</PokiesWriting>
+			</PokiesInfoBlock>
+			<br />
       <PokiesScreenBlock>
         <AnswerGrid pokieNumbers={delayedPokieNumbers} />
       </PokiesScreenBlock>
@@ -101,6 +116,16 @@ const WritingBlock = styled('div')({
 	alignItems: 'flex-start',
 	marginTop: '20px',
 	fontFamily: 'Fredoka',
+})
+
+const PokiesWriting = styled('p')({
+	fontSize: '25px',
+})
+
+const PokiesInfoBlock = styled('div')({
+	display: 'flex',
+	flexDirection: 'row',
+	justifyContent: 'space-between',
 })
 
 const PokiesScreenBlock = styled('div')({

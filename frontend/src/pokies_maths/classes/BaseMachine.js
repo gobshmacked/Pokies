@@ -22,6 +22,10 @@ export class BaseMachine {
 		return ans
 	}
 
+	winnings(ans) {
+		return this.scoreMethod.calculateTotalScore(ans)
+	}
+
 	printOutput(ans) {
 		console.log('Results')
 		console.log(ans[0])
