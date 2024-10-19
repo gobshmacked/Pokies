@@ -3,6 +3,7 @@ import { styled } from '@mui/material'
 import { AnswerGrid } from './AnswerGrid'
 import { BaseMachine } from '../pokies_maths/classes/BaseMachine.js'
 import { ScoreMethodA } from '../pokies_maths/classes/ScoreMethodA.js'
+import supernova from './assets/supernovalogo.png'
 import './cssStyles/DefaultPage.css'
 
 export function DefaultPage(props) {
@@ -49,16 +50,10 @@ export function DefaultPage(props) {
 
   return (
     <PageBox>
+			<img src={supernova}/>
       <TitleBox>
-        <Title1>Title</Title1>
-        <Title2>Second title</Title2>
-        <Title3>Third title</Title3>
       </TitleBox>
       <WritingBlock>
-        <Writing>Writing 1</Writing>
-        <Writing>Writing 2</Writing>
-        <Writing>Writing 3</Writing>
-        <Writing>Writing 4</Writing>
       </WritingBlock>
       <br /><br /><br />
 			<PokiesInfoBlock>
