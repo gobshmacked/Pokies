@@ -22,7 +22,7 @@ export function AnswerGrid(props) {
   return (
     <PokerMachineGrid>
       {props.pokieNumbers.map((icon, index) => (
-        <GridItem key={index}>
+        <GridItem key={index} highlight={props.winningsArray.includes(index)}>
           {icon !== null ? (
             <img src={images[icon]} alt={`Grid item ${index + 1}`} />
           ) : (
@@ -41,17 +41,18 @@ const PokerMachineGrid = styled('div')({
   gap: '10px',
 })
 
-const GridItem = styled('div')({
+const GridItem = styled('div')(({ highlight }) => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   overflow: 'hidden',
+  border: highlight ? '4px solid orange' : 'none', // Highlight with orange border
   '& img': {
     width: '100%',
     height: '100%',
     objectFit: 'cover',
   },
-});
+}));
 
 const LoadingIcon = styled('img')({
   width: '100%',

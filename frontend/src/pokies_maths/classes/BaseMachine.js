@@ -22,8 +22,8 @@ export class BaseMachine {
 		return ans
 	}
 
-	winnings(ans) {
-		return this.scoreMethod.calculateTotalScore(ans)
+	winnings(ans, winningArray) {
+		return this.scoreMethod.calculateTotalScore(ans, winningArray)
 	}
 
 	printOutput(ans) {

@@ -9,11 +9,12 @@ export class ScoreMethodA extends ScoreMethod {
 	}
 
 	// takes in the generated array of numbers and finds all the winning matches in the spin
-	calculateTotalScore(pokiesArray) {
+	calculateTotalScore(pokiesArray, winningArray) {
 		let ans = 0
 		for (let line = 0; line < 3; line++) {
 			let target = -1
 			let ansArray = []
+			let winsArray = []
 			let startRow = 0
 			let startCol = 0
 			for (let i = 0; i < 5; i++) {
@@ -22,18 +23,22 @@ export class ScoreMethodA extends ScoreMethod {
 				}
 				if (pokiesArray[line][i] === target || pokiesArray[line][i] === 0) {
 					ansArray.push(pokiesArray[line][i])
+					winsArray.push([line, i])
 					if (startRow === 0 && startCol === 0) {
 						startRow = line
 						startCol = i
 					}
 				} else {
 					ansArray = []
+					winsArray = []
 					target = -1
 					i--
 				}
 				// if there is already a combo of 3 and the combo does not continue in the next slide
 				if (ansArray.length >= 3 && (i === 4 || (pokiesArray[line][i + 1] !== target && pokiesArray[line][i + 1] !== 0))) {
-					ans += this.calculateComboScore(pokiesArray, startRow, startCol, ansArray, target)
+					ans += this.calculateComboScore(pokiesArray, startRow, startCol, ansArray, winsArray, target)
+					winningArray.push(winsArray)
+					winsArray = []
 					ansArray = []
 					target = -1
 					i--
@@ -44,7 +49,7 @@ export class ScoreMethodA extends ScoreMethod {
 	}
 
 	// calculates value of particular combo
-	calculateComboScore(pokiesArray, row, col, comboArray, target) {
+	calculateComboScore(pokiesArray, row, col, comboArray, winsArray, target) {
 		let ans = 0
 		if (target === -1) {
 			target = 0
@@ -52,12 +57,10 @@ export class ScoreMethodA extends ScoreMethod {
 		let wildArray = []
 		for (let i = 0; i < comboArray.length; i++) {
 			if (comboArray[i] === 0) {
-				let wilds = this.wildsInCol(pokiesArray, row, col + i)
+				let wilds = this.wildsInCol(pokiesArray, row, col + i, winsArray)
 				wildArray.push((Math.pow(2, wilds - 1)) * this.scoreArray[0])
 			}
 		}
-		// console.log(target)
-		// console.log(this.scoreArray[target])
 		switch (target) {
 			case 0:
 				return this.arraySum(wildArray)
@@ -88,16 +91,18 @@ export class ScoreMethodA extends ScoreMethod {
 	}
 
 	// returns the number of wilds that are next to each other in column based on the provided row and col of a wild element
-	wildsInCol(pokiesArray, row, col) {
+	wildsInCol(pokiesArray, row, col, winsArray) {
 		let count = 1
 		if (row - 1 >= 0) {
 			if (pokiesArray[row - 1][col] === 0) {
 				count++
+				winsArray.push(row - 1, col)
 			}
 		}
 		if (row + 1 < 3) {
 			if (pokiesArray[row + 1][col] === 0) {
 				count++
+				winsArray.push(row + 1, col)
 			}
 		}
 		return count
@@ -117,7 +122,6 @@ export class ScoreMethodA extends ScoreMethod {
 		}
 		return base
 	}
-
 }
 
 // scoring details

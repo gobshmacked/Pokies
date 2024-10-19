@@ -11,6 +11,7 @@ export function DefaultPage(props) {
 	const [spins, setSpins] = React.useState(0)
 	const [winnings, setWinnings] = React.useState(0)
 	const [totalWinnings, setTotalWinnings] = React.useState(0)
+	const [winningsArray, setWinningsArray] = React.useState([])
 
   let scoreArray = [180, 25, 27, 29, 31, 33, 100, 150, 250, 600, 1000];
   let probabilityArray = [40, 70, 71, 72, 73, 74, 82, 76, 65, 20, 14];
@@ -19,8 +20,10 @@ export function DefaultPage(props) {
   const machine = new BaseMachine(probabilityArray, scoreMethod);
 
   function nextPokiesNumbers(machine) {
+		let winningArray = []
     let nextNumbers = machine.generate();
-		let amountWon = machine.winnings(nextNumbers)
+		let amountWon = machine.winnings(nextNumbers, winningArray)
+		setWinningsArray(winningIndices(winningArray))
 		let totalWin = totalWinnings + amountWon - 1
 		if (totalWin % 1 !== 0) totalWin = parseFloat(totalWin.toFixed(2))
 		setSpins(spins + 1)
@@ -48,6 +51,19 @@ export function DefaultPage(props) {
     });
   }
 
+	function winningIndices(winningArray) {
+		let indices = []
+		for (let i = 0; i < winningArray.length; i++) {
+			for (let j = 0; j < winningArray[i].length; j++) {
+				let indice = winningArray[i][j][0] * 5 + winningArray[i][j][1]
+				if (!indices.includes(indice)) {
+					indices.push(indice)
+				}
+			}
+		}
+		return indices
+	}
+
   return (
     <PageBox>
 			<img src={supernova}/>
@@ -63,7 +79,7 @@ export function DefaultPage(props) {
 			</PokiesInfoBlock>
 			<br />
       <PokiesScreenBlock>
-        <AnswerGrid pokieNumbers={delayedPokieNumbers} />
+        <AnswerGrid pokieNumbers={delayedPokieNumbers} winningsArray={winningsArray}/>
       </PokiesScreenBlock>
       <br /><br /><br />
       <PokiesInteractBlock>
