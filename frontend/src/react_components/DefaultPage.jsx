@@ -3,6 +3,7 @@ import { styled } from '@mui/material'
 import { AnswerGrid } from './AnswerGrid'
 import { BaseMachine } from '../pokies_maths/classes/BaseMachine.js'
 import { ScoreMethodA } from '../pokies_maths/classes/ScoreMethodA.js'
+import { SequenceGenerator } from '../pokies_maths/classes/SequenceGenerator.js'
 import supernova from './assets/supernovalogo.png'
 import './cssStyles/DefaultPage.css'
 
@@ -16,8 +17,9 @@ export function DefaultPage(props) {
   let scoreArray = [180, 25, 27, 29, 31, 33, 100, 150, 250, 600, 1000];
   let probabilityArray = [40, 70, 71, 72, 73, 74, 82, 76, 65, 20, 14];
 
+	const sequenceGenerator = new SequenceGenerator(probabilityArray)
   const scoreMethod = new ScoreMethodA(scoreArray);
-  const machine = new BaseMachine(probabilityArray, scoreMethod);
+  const machine = new BaseMachine(scoreMethod, sequenceGenerator);
 
   function nextPokiesNumbers(machine) {
 		let winningArray = []

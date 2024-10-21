@@ -1,25 +1,16 @@
-import { weightedValue } from "../helper.js"
 import { ScoreMethodA } from "./ScoreMethodA.js"
 // This object is the basic code required for a slot machine that operates solely on random numbers and a sequence of realtive probabilities for each option
 
 
 export class BaseMachine {
 	
-	constructor(probabilityArray, scoreMethod) {
-		this.probabilityArray = probabilityArray
+	constructor(scoreMethod, sequenceGenerator) {
 		this.scoreMethod = scoreMethod
+		this.sequenceGenerator = sequenceGenerator
 	}
 
 	generate() {
-		let ans = []
-		for (let i = 0; i < 3; i++) {
-			let line = []
-			for (let j = 0; j < 5; j++) {
-				line.push(weightedValue(this.probabilityArray))
-			}
-			ans.push(line)
-		}
-		return ans
+		return this.sequenceGenerator.generate()
 	}
 
 	winnings(ans, winningArray) {
