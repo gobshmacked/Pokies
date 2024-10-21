@@ -1,19 +1,34 @@
-import { SequenceGenerator } from "./SequenceGenerator"
+import { SequenceGenerator } from "./SequenceGenerator.js"
 
-class SequenceGeneratorA extends SequenceGenerator {
-	constructor(probabilityArray) {
+export class SequenceGeneratorA extends SequenceGenerator {
+	constructor(symbolProbabilityArray, rowOneMultiplierAdd) {
 		super()
-		this.probabilityArray = probabilityArray
+		this.symbolProbabilityArray = symbolProbabilityArray
+		this.rowOneMultiplierAdd = rowOneMultiplierAdd
 	}
 
-	generate () {
+	generate() {
+		this.rowOneMultiplier = Array(this.symbolProbabilityArray.length).fill(1)
 		let ans = []
 		for (let i = 0; i < 3; i++) {
 			let line = []
 			for (let j = 0; j < 5; j++) {
-				line.push(this.weightedValue(this.probabilityArray))
+				if (i === 0) {
+					line.push(this.weightedValue(this.symbolProbabilityArray))
+					this.rowOneMultiplier[line[j]] += (this.rowOneMultiplierAdd[line[j]] - 1)
+				} else {
+					line.push(this.weightedValue(this.arrayMultiply(this.symbolProbabilityArray, this.rowOneMultiplier)))
+				}
 			}
 			ans.push(line)
+		}
+		return ans
+	}
+	// works on arrays of ints and floats of equal size
+	arrayMultiply(array1, array2) {
+		let ans = []
+		for (let i = 0; i < array1.length; i++) {
+			ans.push(1.0 * array1[i] * 1.0 * array2[i])
 		}
 		return ans
 	}
