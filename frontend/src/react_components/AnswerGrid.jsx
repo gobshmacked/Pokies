@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { styled } from '@mui/material'
-import loadingIcon from './assets/pokie_images/12.png';
-import image0 from './assets/pokie_images/0.png';
+import loadingIcon from './assets/pokie_images/loading.png';
+import image0a from './assets/pokie_images/0.png';
+import image0b from './assets/pokie_images/0b.png';
+import image0c from './assets/pokie_images/0c.png';
 import image1 from './assets/pokie_images/1.png';
 import image2 from './assets/pokie_images/2.png';
 import image3 from './assets/pokie_images/3.png';
@@ -17,7 +19,14 @@ import image12 from './assets/pokie_images/12.png';
 
 
 export function AnswerGrid(props) {
-  const images = [image0, image1, image2, image3, image4, image5, image6, image7, image8, image9, image10, image11, image12];
+  const images = [image0a, image1, image2, image3, image4, image5, image6, image7, image8, image9, image10, image11, image12];
+	if (props.gameState === 'green') {
+		images[0] = image0a
+	} else if (props.gameState === 'yellow') {
+		images[0] = image0b
+	} else if (props.gameState === 'red') {
+		images[0] = image0c
+	}
 
   return (
     <PokerMachineGrid>

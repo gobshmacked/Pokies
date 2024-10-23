@@ -8,16 +8,22 @@ import { SequenceGeneratorA } from '../pokies_maths/classes/SequenceGeneratorA.j
 import supernova from './assets/supernovalogo.png'
 import './cssStyles/DefaultPage.css'
 
+import image0a from './assets/pokie_images/0.png';
+import image0b from './assets/pokie_images/0b.png';
+import image0c from './assets/pokie_images/0c.png';
+
 export function DefaultPage(props) {
   const [delayedPokieNumbers, setDelayedPokieNumbers] = React.useState([5, 8, 6, 9, 6, 0, 4, 6, 9, 3, 10, 10, 6, 1, 0]);
 	const [spins, setSpins] = React.useState(0)
 	const [winnings, setWinnings] = React.useState(0)
 	const [totalWinnings, setTotalWinnings] = React.useState(0)
 	const [winningsArray, setWinningsArray] = React.useState([])
+	const [gameState, setGameState] = React.useState(['green'])
+	const [gameStateChanger, setGameStateChanger] = React.useState(false)
 
-  let scoreArray = [180, 25, 27, 29, 31, 33, 100, 150, 250, 600, 1000];
-  let probabilityArray = [40, 70, 71, 72, 73, 74, 82, 76, 65, 20, 14];
-	let rowOneMultiplier = [1.4, 1.05, 1.05, 1.05, 1.05, 1.05, 1.2, 1.2, 1.2, 1.2, 1.2]
+  let scoreArray = [180, 25, 27, 29, 31, 33, 100, 150, 250, 600, 1000, 100];
+  let probabilityArray = [40, 70, 71, 72, 73, 74, 82, 76, 65, 20, 14, 10];
+	let rowOneMultiplier = [1.4, 1.05, 1.05, 1.05, 1.05, 1.05, 1.2, 1.2, 1.2, 1.2, 1.2, 1]
 
 	// backend generator creation start
 
@@ -32,9 +38,36 @@ export function DefaultPage(props) {
   const machine = new BaseMachine(scoreMethod, sequenceGenerator);
 	// backend generator creation end
 
+	function setNewGameState(newState) {
+		setGameState(newState)
+	}
+
+	let image1 = image0b
+	let image2 = image0c
+	let stateOption1 = 'yellow'
+	let stateOption2 = 'red'
+
+	if (gameState === 'green') {
+		image1 = image0b
+		image2 = image0c
+		stateOption1 = 'yellow'
+		stateOption2 = 'red'
+	} else if (gameState === 'yellow') {
+		image1 = image0a
+		image2 = image0c
+		stateOption1 = 'green'
+		stateOption2 = 'red'
+	} else if (gameState === 'red') {
+		image1 = image0a
+		image2 = image0b
+		stateOption1 = 'green'
+		stateOption2 = 'yellow'
+	}
+
   function nextPokiesNumbers(machine) {
 		let winningArray = []
     let nextNumbers = machine.generate();
+		checkForPlanetChange(nextNumbers)
 		let amountWon = machine.winnings(nextNumbers, winningArray)
 		setWinningsArray(winningIndices(winningArray))
 		let totalWin = totalWinnings + amountWon - 1
@@ -77,6 +110,27 @@ export function DefaultPage(props) {
 		return indices
 	}
 
+	function checkForPlanetChange(answerArray) {
+		for (let i = 0; i < 3; i++) {
+			let lineShipCount = 0
+			for (let j = 0; j < 5; j++) {
+				if (answerArray[i][j] === 11) {
+					lineShipCount++
+				}
+				if (lineShipCount === 5) {
+					setTimeout(() => {
+						setGameStateChanger(true);
+					}, 2500);
+				}
+			}
+		}
+	}
+
+	function handleImageClick(newState) {
+    setGameState(newState);
+    setGameStateChanger(false);
+  }
+
   return (
     <PageBox>
 			<img src={supernova}/>
@@ -91,7 +145,7 @@ export function DefaultPage(props) {
 				<PokiesWriting>{totalWinnings}</PokiesWriting>
 			</PokiesInfoBlock>
       <PokiesScreenBlock>
-        <AnswerGrid pokieNumbers={delayedPokieNumbers} winningsArray={winningsArray}/>
+        <AnswerGrid pokieNumbers={delayedPokieNumbers} winningsArray={winningsArray} gameState={gameState}/>
       </PokiesScreenBlock>
       <br /><br /><br />
       <PokiesInteractBlock>
@@ -99,6 +153,14 @@ export function DefaultPage(props) {
           <StyledButton onClick={() => nextPokiesNumbers(machine)} />
         </PokiesButtonBlock>
       </PokiesInteractBlock>
+			{gameStateChanger && (
+        <Overlay>
+          <ImageBox>
+            <StyledImage src={image1} alt="Planet 1" onClick={() => handleImageClick(stateOption1)} />
+            <StyledImage src={image2} alt="Planet 2" onClick={() => handleImageClick(stateOption2)} />
+          </ImageBox>
+        </Overlay>
+      )}
       <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
       <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
       <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
@@ -191,6 +253,33 @@ const StyledButton = styled('button')({
   },
   '&:active': {
     transform: 'scale(0.9)', // Slightly shrink on click
+  },
+});
+
+const Overlay = styled('div')({
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  zIndex: 1000,
+});
+
+const ImageBox = styled('div')({
+  display: 'flex',
+  gap: '20px',
+});
+
+const StyledImage = styled('img')({
+  width: '150px',
+  height: '150px',
+  cursor: 'pointer',
+  '&:hover': {
+    transform: 'scale(1.1)',
   },
 });
 

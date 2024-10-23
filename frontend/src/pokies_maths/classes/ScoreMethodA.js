@@ -35,7 +35,7 @@ export class ScoreMethodA extends ScoreMethod {
 					i--
 				}
 				// if there is already a combo of 3 and the combo does not continue in the next slide
-				if (ansArray.length >= 3 && (i === 4 || (pokiesArray[line][i + 1] !== target && pokiesArray[line][i + 1] !== 0))) {
+				if (ansArray.length >= 3 && (i === 4 || (pokiesArray[line][i + 1] !== target && pokiesArray[line][i + 1] !== 0)) && (target != 11 || ansArray.length == 5)) {
 					ans += this.calculateComboScore(pokiesArray, startRow, startCol, ansArray, winsArray, target)
 					winningArray.push(winsArray)
 					winsArray = []
@@ -80,6 +80,10 @@ export class ScoreMethodA extends ScoreMethod {
 			case 9:
 			case 10:
 				ans = this.powThenHalf(this.scoreArray[target], 1.5, comboArray.length - 3)
+				break;
+			case 11:
+				ans = 0
+				return ans
 				break;
 		}
 		if (wildArray.length === 0) {
