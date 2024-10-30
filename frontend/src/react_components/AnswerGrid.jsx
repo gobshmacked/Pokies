@@ -19,10 +19,12 @@ import image4c from './assets/pokie_images/4c.png';
 import image5a from './assets/pokie_images/5a.png';
 import image5b from './assets/pokie_images/5b.png';
 import image5c from './assets/pokie_images/5c.png';
+import image8a from './assets/pokie_images/8a.png';
+import image8b from './assets/pokie_images/8b.png';
+import image8c from './assets/pokie_images/8c.png';
 
 import image6 from './assets/pokie_images/6.png';
 import image7 from './assets/pokie_images/7.png';
-import image8 from './assets/pokie_images/8.png';
 import image9 from './assets/pokie_images/9.png';
 import image10 from './assets/pokie_images/10.png';
 import image11 from './assets/pokie_images/11.png';
@@ -30,7 +32,7 @@ import image12 from './assets/pokie_images/12.png';
 
 
 export function AnswerGrid(props) {
-  const images = [image0a, image1a, image2a, image3a, image4a, image5a, image6, image7, image8, image9, image10, image11, image12];
+  const images = [image0a, image1a, image2a, image3a, image4a, image5a, image6, image7, image8a, image9, image10, image11, image12];
 	if (props.gameState === 'green') {
 		images[0] = image0a
 		images[1] = image1a
@@ -38,6 +40,7 @@ export function AnswerGrid(props) {
 		images[3] = image3a
 		images[4] = image4a
 		images[5] = image5a
+		images[8] = image8a
 	} else if (props.gameState === 'yellow') {
 		images[0] = image0b
 		images[1] = image1b
@@ -45,6 +48,7 @@ export function AnswerGrid(props) {
 		images[3] = image3b
 		images[4] = image4b
 		images[5] = image5b
+		images[8] = image8b
 	} else if (props.gameState === 'red') {
 		images[0] = image0c
 		images[1] = image1c
@@ -52,6 +56,7 @@ export function AnswerGrid(props) {
 		images[3] = image3c
 		images[4] = image4c
 		images[5] = image5c
+		images[8] = image8c
 	}
 
   return (
