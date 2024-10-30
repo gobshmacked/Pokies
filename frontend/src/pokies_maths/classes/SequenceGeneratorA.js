@@ -9,15 +9,21 @@ export class SequenceGeneratorA extends SequenceGenerator {
 
 	generate() {
 		this.rowOneMultiplier = Array(this.symbolProbabilityArray.length).fill(1)
+		this.generalMultiplier = Array(this.symbolProbabilityArray.length).fill(1)
 		let ans = []
 		for (let i = 0; i < 3; i++) {
 			let line = []
 			for (let j = 0; j < 5; j++) {
+				if (line.length === 0) {
+					this.generalMultiplier[11] *= 1.5
+				} else if (line[j - 1] === 11 && line[0] === 11) {
+					this.generalMultiplier[11] *= 4
+				}
 				if (i === 0) {
 					line.push(this.weightedValue(this.symbolProbabilityArray))
 					this.rowOneMultiplier[line[j]] += (this.rowOneMultiplierAdd[line[j]] - 1)
 				} else {
-					line.push(this.weightedValue(this.arrayMultiply(this.symbolProbabilityArray, this.rowOneMultiplier)))
+					line.push(this.weightedValue(this.arrayMultiply(this.arrayMultiply(this.symbolProbabilityArray, this.rowOneMultiplier), this.generalMultiplier)))
 				}
 			}
 			ans.push(line)
