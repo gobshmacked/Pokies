@@ -22,7 +22,7 @@ export function DefaultPage(props) {
 	const [gameStateChanger, setGameStateChanger] = React.useState(false)
 
   let scoreArray = [180, 25, 27, 29, 31, 33, 100, 150, 250, 600, 1000, 100];
-  let probabilityArray = [40, 70, 71, 72, 73, 74, 82, 76, 65, 20, 14, 10];
+  let probabilityArray = [40, 70, 71, 72, 73, 74, 82, 76, 65, 20, 14, 17];
 	let rowOneMultiplier = [1.4, 1.05, 1.05, 1.05, 1.05, 1.05, 1.2, 1.2, 1.2, 1.2, 1.2, 1]
 
 	// backend generator creation start

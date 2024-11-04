@@ -21,13 +21,14 @@ export class SequenceGenerator {
 	}
 
 	weightedValue (probabilitySeries) {
+		console.log(probabilitySeries)
 		if (probabilitySeries.length === 0) return -1
 	
-		let sum = 0 
+		let sum = 0.0
 		for (let i = 0; i < probabilitySeries.length; i++) {
 			sum += probabilitySeries[i]
 		}
-		let tempsum = 0
+		let tempsum = 0.0
 		let rand = Math.random()
 	
 		// determine which integer best aligns with rand when considering probabilitySeries
