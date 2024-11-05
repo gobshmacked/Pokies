@@ -18,7 +18,7 @@ export class ProbabilityMultiplier {
 				symbolCount[symbolNumber]++
 			}
 		}
-		this.combineProbabilityArrays(multiplierArray, symbolArray, this.multiplierAdderArray, this.multiplierRangeArray)
+		this.combineProbabilityArrays(multiplierArray, symbolCount)
 	}
 	// adds or removes to the multiplier array based on how many times symbol appears
 	combineProbabilityArrays(multiplierArray, symbolCount) {

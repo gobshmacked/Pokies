@@ -33,6 +33,7 @@ export class SequenceGeneratorA extends SequenceGenerator {
 					line.push(this.weightedValue(this.arrayMultiply(this.arrayMultiply(this.symbolProbabilityArray, this.rowOneMultiplier), this.generalMultiplier)))
 				}
 			}
+			// console.log(this.generalMultiplier)
 			ans.push(line)
 		}
 		this.longTermWeight.alterGeneralMultiplier(this.generalMultiplier, ans)
@@ -40,10 +41,13 @@ export class SequenceGeneratorA extends SequenceGenerator {
 	}
 	// works on arrays of ints and floats of equal size
 	arrayMultiply(array1, array2) {
+		// console.log("TWO", array2)
+		// console.log(array2.includes(21))
 		let ans = []
-		for (let i = 0; i < array1.length; i++) {
-			ans.push(1.0 * array1[i] * 1.0 * array2[i])
+		for (let k = 0; k < array1.length; k++) {
+			ans.push(1.0 * array1[k] * 1.0 * array2[k])
 		}
+		// console.log("THREE", ans)
 		return ans
 	}
 	//TODO I want to use various methods to alter the values contained in the probabilty array 

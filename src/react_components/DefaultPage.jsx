@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { styled } from '@mui/material'
 import { AnswerGrid } from './AnswerGrid'
 import { BaseMachine } from '../pokies_maths/classes/BaseMachine.js'
@@ -34,7 +34,12 @@ export function DefaultPage(props) {
 	// backend generator creation start
 
 	// sequence generator A, row 1 alters successive rows
-	const sequenceGenerator = new SequenceGeneratorA(probabilityArray, rowOneMultiplier, longTermWeightingAdd, longTermWeightingRange)
+	const sequenceGeneratorRef = useRef(null);
+  if (sequenceGeneratorRef.current === null) {
+    sequenceGeneratorRef.current = new SequenceGeneratorA(probabilityArray, rowOneMultiplier, longTermWeightingAdd, longTermWeightingRange);
+  }
+  const sequenceGenerator = sequenceGeneratorRef.current;
+	// const sequenceGenerator = new SequenceGeneratorA(probabilityArray, rowOneMultiplier, longTermWeightingAdd, longTermWeightingRange)
   const scoreMethod = new ScoreMethodA(scoreArray);
   const machine = new BaseMachine(scoreMethod, sequenceGenerator);
 	// backend generator creation end
@@ -206,6 +211,7 @@ const WritingBlock = styled('div')({
 
 const PokiesWriting = styled('p')({
 	fontSize: '25px',
+	color: '#DEEFFF'
 })
 
 const PokiesInfoBlock = styled('div')({
