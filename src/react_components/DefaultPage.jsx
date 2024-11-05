@@ -22,14 +22,14 @@ export function DefaultPage(props) {
 	const [gameStateChanger, setGameStateChanger] = React.useState(false)
 
 	// value of each symbol
-  let scoreArray = [180, 25, 27, 29, 31, 33, 100, 150, 250, 600, 1000, 100];
+  let scoreArray = [180, 25, 27, 29, 31, 33, 100, 150, 250, 600, 1000, 100, 750];
 	// probability of each symbol
-  let probabilityArray = [40, 70, 71, 72, 73, 74, 82, 76, 65, 20, 14, 17];
+  let probabilityArray = [40, 70, 71, 72, 73, 74, 82, 76, 48, 20, 14, 17, 17];
 	// probability of appearence in subsequent rows if present in row 1
-	let rowOneMultiplier = [1.4, 1.05, 1.05, 1.05, 1.05, 1.05, 1.2, 1.2, 1.2, 1.2, 1.2, 1]
+	let rowOneMultiplier = [1.2, 1.05, 1.05, 1.05, 1.05, 1.05, 1.2, 1.2, 1.2, 1.2, 1.2, 1, 0]
 	// variables for long term probability effects
-	let longTermWeightingAdd = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-	let longTermWeightingRange = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+	let longTermWeightingAdd = [0.08, 0.03, -0.03, 0.03, 0.03, 0.03, 0.02, 0.08, 0.15, 0.02, 0.02, 0, 0.05]
+	let longTermWeightingRange = [0.4, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.23, 0.5, 0.1, 0.1, 0, 0.2]
 
 	// backend generator creation start
 
