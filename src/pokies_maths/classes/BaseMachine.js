@@ -34,7 +34,8 @@ export class BaseMachine {
 				console.log(`Upto iteration ${upto} million`)
 			}
 			let ans = this.generate()
-			sum += this.scoreMethod.calculateTotalScore(ans)
+			let winnings = []
+			sum += this.scoreMethod.calculateTotalScore(ans, winnings)
 		}
 		console.log(`From ${iterations} iterations:`)
 		console.log(`Spent:\t${iterations}`)
