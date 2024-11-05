@@ -21,19 +21,20 @@ export function DefaultPage(props) {
 	const [gameState, setGameState] = React.useState(['green'])
 	const [gameStateChanger, setGameStateChanger] = React.useState(false)
 
+	// value of each symbol
   let scoreArray = [180, 25, 27, 29, 31, 33, 100, 150, 250, 600, 1000, 100];
+	// probability of each symbol
   let probabilityArray = [40, 70, 71, 72, 73, 74, 82, 76, 65, 20, 14, 17];
+	// probability of appearence in subsequent rows if present in row 1
 	let rowOneMultiplier = [1.4, 1.05, 1.05, 1.05, 1.05, 1.05, 1.2, 1.2, 1.2, 1.2, 1.2, 1]
+	// variables for long term probability effects
+	let longTermWeightingAdd = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+	let longTermWeightingRange = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 	// backend generator creation start
 
-	// base method, each symbol is completely random
-	// const sequenceGenerator = new SequenceGenerator(probabilityArray)
-  // const scoreMethod = new ScoreMethodA(scoreArray);
-  // const machine = new BaseMachine(scoreMethod, sequenceGenerator);
-
-		// sequence generator A, row 1 alters successive rows
-	const sequenceGenerator = new SequenceGeneratorA(probabilityArray, rowOneMultiplier)
+	// sequence generator A, row 1 alters successive rows
+	const sequenceGenerator = new SequenceGeneratorA(probabilityArray, rowOneMultiplier, longTermWeightingAdd, longTermWeightingRange)
   const scoreMethod = new ScoreMethodA(scoreArray);
   const machine = new BaseMachine(scoreMethod, sequenceGenerator);
 	// backend generator creation end

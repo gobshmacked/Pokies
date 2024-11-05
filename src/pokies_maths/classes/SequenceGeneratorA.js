@@ -1,15 +1,17 @@
 import { SequenceGenerator } from "./SequenceGenerator.js"
+import { ProbabilityMultiplier } from "./ProbabilityMultiplier.js"
 
 export class SequenceGeneratorA extends SequenceGenerator {
-	constructor(symbolProbabilityArray, rowOneMultiplierAdd) {
+	constructor(symbolProbabilityArray, rowOneMultiplierAdd, longTermWeightingAdd, longTermWeightingRange) {
 		super()
 		this.symbolProbabilityArray = symbolProbabilityArray
 		this.rowOneMultiplierAdd = rowOneMultiplierAdd
+		this.generalMultiplier = Array(this.symbolProbabilityArray.length).fill(1)
+		this.longTermWeight = new ProbabilityMultiplier(longTermWeightingAdd, longTermWeightingRange)
 	}
 
 	generate() {
 		this.rowOneMultiplier = Array(this.symbolProbabilityArray.length).fill(1)
-		this.generalMultiplier = Array(this.symbolProbabilityArray.length).fill(1)
 		let ans = []
 		// for each line
 		for (let i = 0; i < 3; i++) {
@@ -20,7 +22,6 @@ export class SequenceGeneratorA extends SequenceGenerator {
 				if (j === 0) {
 					this.generalMultiplier[11] = 4
 				} else if (line[j - 1] === 11 && line[0] === 11) {
-					console.log("HERE")
 					this.generalMultiplier[11] = 48
 				} else {
 					this.generalMultiplier[11] = 1
@@ -34,6 +35,7 @@ export class SequenceGeneratorA extends SequenceGenerator {
 			}
 			ans.push(line)
 		}
+		this.longTermWeight.alterGeneralMultiplier(this.generalMultiplier, ans)
 		return ans
 	}
 	// works on arrays of ints and floats of equal size

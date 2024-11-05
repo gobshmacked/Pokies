@@ -76,7 +76,7 @@ const SideBarHideButton = styled('button')({
 })
 
 const SideBarIn = styled(SideBarHideButton)({
-	background: '#DEEFFF',
+	background: '#164570',
 })
 
 const SideBarOut = styled(SideBarHideButton)({
@@ -85,7 +85,7 @@ const SideBarOut = styled(SideBarHideButton)({
 })
 
 const Sandwich = styled('img')({
-	background: '#DEEFFF',
+	background: '#164570',
 	margin: '0px',
 	width: '35%',
 	'@media (max-width: 600px)': {
@@ -94,7 +94,7 @@ const Sandwich = styled('img')({
 })
 
 const SandwichIn = styled(Sandwich)({
-	background: '#DEEFFF',
+	background: '#164570',
 })
 
 const SandwichOut = styled(Sandwich)({
