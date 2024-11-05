@@ -31,4 +31,5 @@ const sequenceGenerator = new SequenceGeneratorA(probabilityArray, rowOneMultipl
 const scoreMethod = new ScoreMethodA(scoreArray);
 const machine = new BaseMachine(scoreMethod, sequenceGenerator);
 
-machine.simulateWinnings(1000000)
+// machine.simulateWinnings(1000000)
+machine.winningsAtLeast(2000, 10000000)

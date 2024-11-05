@@ -18,11 +18,12 @@ export class BaseMachine {
 	}
 
 	printOutput(ans) {
+		let winnings = []
 		console.log('Results')
 		console.log(ans[0])
 		console.log(ans[1])
 		console.log(ans[2])
-		console.log(this.scoreMethod.calculateTotalScore(ans))
+		console.log(this.scoreMethod.calculateTotalScore(ans, winnings))
 	}
 
 	// simulates winnings based on bets of 1
@@ -48,7 +49,8 @@ export class BaseMachine {
 		let score = 0
 		while (i < maxIterations) {
 			let ans = this.generate()
-			score = this.scoreMethod.calculateTotalScore(ans)
+			let winnings = []
+			score = this.scoreMethod.calculateTotalScore(ans, winnings)
 			if (score > winningAmount) {
 				console.log(`Score of ${score} after ${i} iterations from:`)
 				this.printOutput(ans)
@@ -57,7 +59,7 @@ export class BaseMachine {
 			i++
 		}
 		if (i === maxIterations) {
-			console.log(`Winning amount of ${score} or more never occurred in ${maxIterations} iterations`)
+			console.log(`Winning amount of ${winningAmount} or more never occurred in ${maxIterations} iterations`)
 		}
 	}
 }
