@@ -20,6 +20,6 @@ export function MainPage(props) {
 
 const Page = styled('div')({
 	display: 'flex',
-	background: '#DEEFFF',
+	background: '#164570',
 	height: '100'
 })

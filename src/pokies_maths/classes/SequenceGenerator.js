@@ -21,7 +21,6 @@ export class SequenceGenerator {
 	}
 
 	weightedValue (probabilitySeries) {
-		console.log(probabilitySeries)
 		if (probabilitySeries.length === 0) return -1
 	
 		let sum = 0.0
