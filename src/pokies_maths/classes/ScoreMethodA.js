@@ -79,6 +79,7 @@ export class ScoreMethodA extends ScoreMethod {
 				break;
 			case 9:
 			case 10:
+			case 12:
 				ans = this.powThenHalf(this.scoreArray[target], 1.5, comboArray.length - 3)
 				break;
 			case 11:
