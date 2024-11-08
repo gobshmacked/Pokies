@@ -1,5 +1,8 @@
 import React, { useRef } from 'react'
 import { styled } from '@mui/material'
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 import { AnswerGrid } from './AnswerGrid'
 import { BaseMachine } from '../pokies_maths/classes/BaseMachine.js'
 import { ScoreMethodA } from '../pokies_maths/classes/ScoreMethodA.js'
@@ -20,6 +23,11 @@ export function DefaultPage(props) {
 	const [winningsArray, setWinningsArray] = React.useState([])
 	const [gameState, setGameState] = React.useState(['green'])
 	const [gameStateChanger, setGameStateChanger] = React.useState(false)
+	const [uploadFunds, setUploadFunds] = React.useState('');
+	const [simulateSpins, setSimulateSpins] = React.useState('');
+	const [nextWinValue, setNextWinValue] = React.useState('');
+	const [showSimulationText, setShowSimulationText] = React.useState(false);
+	const [simulationTexts, setSimulationTexts] = React.useState([0, 0, 0]);
 
 	let scoreArrayA = [145, 33, 35, 37, 39, 41, 100, 150, 250, 450, 800, 100, 550];
 	let probabilityArrayA = [45, 60, 61, 62, 63, 64, 80, 76, 50, 24, 14, 17, 18];
@@ -62,30 +70,7 @@ export function DefaultPage(props) {
   const sequenceGeneratorC = sequenceGeneratorRefC.current;
 	const scoreMethodC = new ScoreMethodA(scoreArrayC);
 	const machineC = new BaseMachine(scoreMethodC, sequenceGeneratorC);
-	
 
-// 	// value of each symbol
-// let scoreArray = [180, 33, 35, 37, 39, 41, 130, 170, 270, 580, 1000, 100, 750];
-// // probability of each symbol
-// let probabilityArray = [40, 65, 66, 67, 68, 69, 80, 76, 50, 24, 14, 17, 18];
-// // probability of appearence in subsequent rows if present in row 1
-// let rowOneMultiplier = [1.2, 1.05, 1.05, 1.05, 1.05, 1.05, 1.2, 1.2, 1.2, 1.2, 1.2, 1, 1]
-// // variables for long term probability effects
-// let longTermWeightingAdd = [0.08, 0.03, -0.03, 0.03, 0.03, 0.03, 0.02, 0.08, 0.15, 0.02, 0.02, 0, 0.05]
-// let longTermWeightingRange = [0.4, 0.2, 0.2, 0.2, 0.2, 0.2, 0.1, 0.23, 0.5, 0.1, 0.25, 0, 0.2]
-
-// 	// backend generator creation start
-
-// 	// sequence generator A, row 1 alters successive rows
-// 	const sequenceGeneratorRef = useRef(null);
-//   if (sequenceGeneratorRef.current === null) {
-//     sequenceGeneratorRef.current = new SequenceGeneratorA(probabilityArray, rowOneMultiplier, longTermWeightingAdd, longTermWeightingRange);
-//   }
-//   const sequenceGenerator = sequenceGeneratorRef.current;
-// 	// const sequenceGenerator = new SequenceGeneratorA(probabilityArray, rowOneMultiplier, longTermWeightingAdd, longTermWeightingRange)
-//   const scoreMethod = new ScoreMethodA(scoreArray);
-//   const machine = new BaseMachine(scoreMethod, sequenceGenerator);
-// 	// backend generator creation end
 
 	function setNewGameState(newState) {
 		setGameState(newState)
@@ -113,6 +98,11 @@ export function DefaultPage(props) {
 		stateOption2 = 'yellow'
 	}
 
+	function handleMainButtonClick(machine) {
+		nextPokiesNumbers(machine)
+		setShowSimulationText(false)
+	}
+
   function nextPokiesNumbers(machine) {
 		let winningArray = []
 		let nextNumbers = machine.generate()
@@ -124,12 +114,7 @@ export function DefaultPage(props) {
 		setSpins(spins + 1)
 		setWinnings(amountWon)
 		setTotalWinnings(totalWin)
-    let nextNumbersFlattened = [];
-    for (let i = 0; i < 3; i++) {
-      for (let j = 0; j < 5; j++) {
-        nextNumbersFlattened.push(nextNumbers[i][j]);
-      }
-    }
+    let nextNumbersFlattened = flattenOutput(nextNumbers)
 
     // Set all images to null first
     setDelayedPokieNumbers(Array(15).fill(null));
@@ -146,6 +131,26 @@ export function DefaultPage(props) {
     });
   }
 
+	function flattenOutput(array) {
+		let flattenedArray = []
+		for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 5; j++) {
+        flattenedArray.push(array[i][j]);
+      }
+    }
+		return flattenedArray
+	}
+
+	function setPokiesNumbers(ansArray) {
+		setDelayedPokieNumbers(prev => {
+      const newNumbers = [...prev];
+      flattenOutput(ansArray).forEach((num, index) => {
+        newNumbers[index] = num;
+      });
+      return newNumbers;
+    });
+	}
+
 	function winningIndices(winningArray) {
 		let indices = []
 		for (let i = 0; i < winningArray.length; i++) {
@@ -160,19 +165,26 @@ export function DefaultPage(props) {
 	}
 
 	function checkForPlanetChange(answerArray) {
+		if (checkForPlanetChangeBool(answerArray)) {
+			setTimeout(() => {
+				setGameStateChanger(true);
+			}, 2500);
+		}
+	}
+	
+	function checkForPlanetChangeBool(answerArray) {
 		for (let i = 0; i < 3; i++) {
 			let lineShipCount = 0
 			for (let j = 0; j < 5; j++) {
 				if (answerArray[i][j] === 11) {
 					lineShipCount++
 				}
-				if (lineShipCount === 5) {
-					setTimeout(() => {
-						setGameStateChanger(true);
-					}, 2500);
-				}
+			}
+			if (lineShipCount === 5) {
+				return true
 			}
 		}
+		return false
 	}
 
 	function handleImageClick(newState) {
@@ -189,6 +201,80 @@ export function DefaultPage(props) {
 			return machineA
 		}
 	}
+
+	function nextRandMachine() {
+		let possibleStates = ['green', 'yellow', 'red']
+		possibleStates = possibleStates.filter(item => item != gameState)
+		let generated = Math.random()
+		let finalState = 'green'
+		if (generated <= 0.5) {
+			finalState = possibleStates[0]
+		} else {
+			finalState= possibleStates[1]
+		}
+		setGameState(finalState)
+		return stringToMachine(finalState)
+	}
+
+	function stringToMachine(string) {
+		if (string === 'green') {
+			return machineA
+		} else if (string === 'yellow') {
+			return machineB
+		}
+		return machineC
+	}
+
+	function simulateWinnings(iterations, machine) {
+		let sum = 0
+		let nextNumbers
+		let amountWon
+		for (let i = 0; i < iterations; i++) {
+			let winningArray = []
+			nextNumbers = machine.generate()
+			// plant change check
+			amountWon = machine.winnings(nextNumbers, winningsArray)
+			sum += amountWon
+			setWinningsArray(winningIndices(winningArray))
+			if (checkForPlanetChangeBool(nextNumbers)) {
+				machine = nextRandMachine()
+			}
+		}
+		if (sum !== 0) {
+			sum = parseFloat(sum.toFixed(2))
+		}
+		setSpins(spins + iterations)
+		setWinnings(amountWon)
+		setTotalWinnings(parseFloat((totalWinnings + sum - iterations * 1.0).toFixed(2)))
+		setPokiesNumbers(nextNumbers)
+		setShowSimulationText(true)
+		setSimulationTexts([iterations, sum, parseFloat(((1.0 * sum / iterations) * 100).toFixed(2))])
+		return sum
+	}
+
+	// function minimumWin(minimum, iterations) {
+	// 	let nextNumbers
+	// 	for (let i = 0; i < iterations; i++) {
+	// 		let winningArray = []
+	// 		nextNumbers = machine.generate()
+	// 		// plant change check
+	// 		let amountWon = machine.winnings(nextNumbers, winningsArray)
+	// 		// amoutn won something
+	// 		setWinningsArray(winningIndices(winningArray))
+	// 		let totalWin = totalWinnings + amountWon - 1
+	// 		if (totalWin % 1 !== 0) totalWin = parseFloat(totalWin.toFixed(2))
+	// 		setSpins(spins + 1)
+	// 		setWinnings(amountWon)
+	// 		setTotalWinnings(totalWin)
+	// 		if (checkForPlanetChangeBool(nextNumbers)) {
+	// 			machine = nextRandMachine()
+	// 		}
+	// 	}
+	// 	setPokiesNumbers(nextNumbers)
+	// 	setShowSimulationText(true)
+	// 	setSimulationTexts([iterations, sum.toFixed(2), ((1.0 * sum / iterations) * 100).toFixed(2)])
+	// 	return sum
+	// }
 
   return (
     <PageBox>
@@ -209,9 +295,30 @@ export function DefaultPage(props) {
       <br /><br /><br />
       <PokiesInteractBlock>
         <PokiesButtonBlock>
-          <StyledButton onClick={() => nextPokiesNumbers(getMachine())} />
+          <StyledButton onClick={() => handleMainButtonClick(getMachine())}/>
         </PokiesButtonBlock>
       </PokiesInteractBlock>
+			<br /><br />
+			{showSimulationText && <WritingBlock>
+				<Title3>Spent:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${simulationTexts[0]}</Title3>
+				<Title3>Won:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${simulationTexts[1]}</Title3>
+				<Title3>Return rate:&nbsp;&nbsp;{simulationTexts[2]}%</Title3>
+			</WritingBlock>}
+			<br /><br />
+			<TextButtonBox>
+				<TextField value={uploadFunds} label="Upload Funds" color="warning" onChange={(e) => setUploadFunds(e.target.value)} sx={{'& .MuiInputBase-input': {color: '#DEEFFF',}}} focused />
+				<Button variant="contained" color="warning" onClick={() => setTotalWinnings(totalWinnings + parseInt(uploadFunds))}>Upload Funds</Button>
+			</TextButtonBox>
+			<br /><br />
+			<TextButtonBox>
+				<TextField value={simulateSpins} label="Simulations" color="warning" onChange={(e) => setSimulateSpins(e.target.value)} sx={{'& .MuiInputBase-input': {color: '#DEEFFF',}}} focused />
+				<Button variant="contained" color="warning" onClick={() => simulateWinnings(parseInt(simulateSpins), stringToMachine(gameState))}>Simulate Outcomes</Button>
+			</TextButtonBox>
+			<br /><br />
+			<TextButtonBox>
+				<TextField value={nextWinValue} label="Minimum Win" color="warning" onChange={(e) => setNextWinValue(e.target.value)} sx={{'& .MuiInputBase-input': {color: '#DEEFFF',}}} focused />
+				<Button variant="contained" color="warning" onClick={() => setTotalWinnings(totalWinnings + parseInt(uploadFunds))}>Find Minimum Win</Button>
+			</TextButtonBox>
 			{gameStateChanger && (
         <Overlay>
           <ImageBox>
@@ -378,6 +485,7 @@ const Title2 = styled('p')({
 
 const Title3 = styled('p')({
 	fontSize: '2.3vw',
+	color: '#DEEFFF',
 	margin: '0px',
 	'@media (max-width: 800px)': {
 		fontSize: '3vw'
@@ -385,4 +493,11 @@ const Title3 = styled('p')({
 	'@media (max-width: 500px)': {
 		fontSize: '6vw'
 	},
+})
+
+const TextButtonBox = styled('div')({
+	display: 'flex',
+	flexDirection: 'row',
+	justifyContent: 'start', 
+	columnGap: '20px'
 })
