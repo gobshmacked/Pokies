@@ -17,9 +17,8 @@ function SideBarShow(props) {
 			<br/>
 			<SideBarOut onClick = {() => props.sideBarShowChange('hide')}><SandwichOut alt = 'side bar button' src = {sandwich}/></SideBarOut>
 			<br/>
-			<SideBarElement onClick = {() => props.pageStateChange('default')}>Test</SideBarElement>
+			<SideBarElement onClick = {() => props.pageStateChange('default')}>Machine</SideBarElement>
 			<SideBarElement onClick = {() => props.pageStateChange('about')}>About</SideBarElement>
-			<SideBarElement onClick = {() => props.pageStateChange('contact')}>Contact</SideBarElement>
 		</SideBarDiv>
 	)
 }

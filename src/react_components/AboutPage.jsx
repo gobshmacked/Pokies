@@ -1,34 +1,82 @@
 import React from 'react'
 import { styled } from '@mui/material'
 
+import image0a from './assets/pokie_images/0.png';
+import image0b from './assets/pokie_images/0b.png';
+import image0c from './assets/pokie_images/0c.png';
+import image1a from './assets/pokie_images/1a.png';
+import image1b from './assets/pokie_images/1b.png';
+import image1c from './assets/pokie_images/1c.png';
+import image2a from './assets/pokie_images/2a.png';
+import image2b from './assets/pokie_images/2b.png';
+import image2c from './assets/pokie_images/2c.png';
+import image3a from './assets/pokie_images/3a.png';
+import image3b from './assets/pokie_images/3b.png';
+import image3c from './assets/pokie_images/3c.png';
+import image4a from './assets/pokie_images/4a.png';
+import image4b from './assets/pokie_images/4b.png';
+import image4c from './assets/pokie_images/4c.png';
+import image5a from './assets/pokie_images/5a.png';
+import image5b from './assets/pokie_images/5b.png';
+import image5c from './assets/pokie_images/5c.png';
+import image8a from './assets/pokie_images/8a.png';
+import image8b from './assets/pokie_images/8b.png';
+import image8c from './assets/pokie_images/8c.png';
+
+import image6 from './assets/pokie_images/6.png';
+import image7 from './assets/pokie_images/7.png';
+import image9 from './assets/pokie_images/9.png';
+import image10 from './assets/pokie_images/10.png';
+import image11 from './assets/pokie_images/11.png';
+import image12 from './assets/pokie_images/12.png';
+
 export function AboutPage() {
 	return (
 		<AboutWrapper>
 			<WritingBlock>
-				<InstructionHeading2>About</InstructionHeading2>
+				<InstructionHeading2>Quickstart Guide</InstructionHeading2>
 				<LineSeperator/>
 				<br/><br/>
-				<InstructionHeading>Subheading</InstructionHeading>
-				<Writing>The Political Alignment Test is a series of questions that measure a person's political and philosophical views.</Writing>
-				<Writing>The test should only be used as a rough guide of your views as political and philosophical beliefs are too complex to be perfectly captured by a test.</Writing>
 				<br/><br/>
-				<LineSeperator/>
-				<br/>
-				<InstructionHeading>What is being measured by the test?</InstructionHeading>
-				<Writing>The Political Alignment Test measures and places you on 3 scales:</Writing>
-				<Writing>1. The Economic scale measured on the Left-Right axis</Writing>
-				<Writing>2. The Social scale measured on the Libertarian-Authoritarian axis</Writing>
-				<Writing>3. Either the Rational Egoism scale or Utilitarianism scale depending on which one your answers more closely align with</Writing>
-				<br/><br/>
-				<LineSeperator/>
-				<br/><br/>
-				<InstructionHeading>Definitions</InstructionHeading>
-				<Writing><Bold>Left:</Bold> Refers to left wing views characterised by increased levels of government intervention in the economy, often in the form of taxation, government spending or the operation of state owned businesses</Writing>
-				<Writing><Bold>Right:</Bold> Refers to right wing views characterised by decreased levels of government intervention in the economy, often in the form of less taxes and limited restrictions on the free market</Writing>
-				<Writing><Bold>Libertarian:</Bold> Refers to views characterised by fewer restrictions on individual rights, often in the form of fewer laws</Writing>
-				<Writing><Bold>Authoritarian:</Bold> Refers to views characterised by greater restrictions on indiviudal rights, often in the form of more restrictive laws and greater punishment for wrongdoing</Writing>
-				<Writing><Bold>Utilitarianism:</Bold> The idea that producing the greatest good for the greatest number is the goal, and actions that align with this goal are good and ones that don't are bad</Writing>
-				<Writing><Bold>Rational Egoism:</Bold> The idea that maximising ones own self interests is the right thing to do</Writing>
+				<InstructionHeading>Wilds:</InstructionHeading>
+				<ImageBox>
+					<img src={image0a} width = '15%'/>
+					<img src={image0b} width = '15%'/>
+					<img src={image0c} width = '15%'/>
+				</ImageBox>
+				<InstructionHeading>Feature:</InstructionHeading>
+				<ImageBox>
+					<img src={image11} width = '15%'/>
+					<BigWriting>x5</BigWriting>
+				</ImageBox>
+				<InstructionHeading>High Value:</InstructionHeading>
+				<ImageBox>
+					<img src={image9} width = '15%'/>
+					<BigWriting>&lt;</BigWriting>
+					<img src={image12} width = '15%'/>
+					<BigWriting>&lt;</BigWriting>
+					<img src={image10} width = '15%'/>
+				</ImageBox>
+				<InstructionHeading>Medium Value:</InstructionHeading>
+				<ImageBox>
+					<img src={image6} width = '15%'/>
+					<BigWriting>&lt;</BigWriting>
+					<img src={image7} width = '15%'/>
+					<BigWriting>&lt;</BigWriting>
+					<img src={image8a} width = '15%'/>
+				</ImageBox>
+				<InstructionHeading>Low Value:</InstructionHeading>
+				<ImageBox>
+					<img src={image1a} width = '15%'/>
+					<BigWriting>&lt;</BigWriting>
+					<img src={image2a} width = '15%'/>
+					<BigWriting>&lt;</BigWriting>
+					<img src={image3a} width = '15%'/>
+					<BigWriting>&lt;</BigWriting>
+					<img src={image4a} width = '15%'/>
+					<BigWriting>&lt;</BigWriting>
+					<img src={image5a} width = '15%'/>
+				</ImageBox>
 				<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 			</WritingBlock>
 		</AboutWrapper>
@@ -48,6 +96,11 @@ const AboutWrapper = styled('div')({
 	}
 })
 
+const ImageBox = styled('div')({
+	display: 'flex',
+	flexDirection: 'row'
+})
+
 export const WritingBlock = styled('div')({
 	display: 'flex',
 	flexDirection: 'column',
@@ -57,25 +110,36 @@ export const WritingBlock = styled('div')({
 })
 
 export const InstructionHeading = styled('p')({
-	color: '#22305B',
+	color: '#DEEFFF',
 	fontFamily: 'Staatliches',
 	fontSize: '35px',
 })
 
 export const InstructionHeading2 = styled('p')({
-	color: '#22305B',
+	color: '#DEEFFF',
 	fontFamily: 'Staatliches',
 	fontSize: '40px',
 })
 
 export const Writing = styled('p')({
-	color: '#000000',
+	color: '#DEEFFF',
 	fontFamily: 'Fredoka',
 	marginLeft: '2%',
 	textAlign: 'left',
 	fontSize: '18px',
 	'@media (min-width: 600px)': {
 		fontSize: '24px'
+	}
+})
+
+const BigWriting = styled('p')({
+	color: '#DEEFFF',
+	fontFamily: 'Fredoka',
+	marginLeft: '2%',
+	textAlign: 'left',
+	fontSize: '40px',
+	'@media (min-width: 600px)': {
+		fontSize: '52px'
 	}
 })
 
