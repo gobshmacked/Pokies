@@ -37,6 +37,8 @@ export function AboutPage() {
 				<InstructionHeading2>Quickstart Guide</InstructionHeading2>
 				<LineSeperator/>
 				<br/><br/>
+				<InstructionHeading>Winning</InstructionHeading>
+				<Writing>Win by matching 3 or more along a line</Writing>
 				<br/><br/>
 				<InstructionHeading>Wilds:</InstructionHeading>
 				<ImageBox>
