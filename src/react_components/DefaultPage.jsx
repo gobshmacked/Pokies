@@ -315,10 +315,10 @@ export function DefaultPage(props) {
 				<Button variant="contained" color="warning" onClick={() => simulateWinnings(parseInt(simulateSpins), stringToMachine(gameState))}>Simulate Outcomes</Button>
 			</TextButtonBox>
 			<br /><br />
-			<TextButtonBox>
+			{/* <TextButtonBox>
 				<TextField value={nextWinValue} label="Minimum Win" color="warning" onChange={(e) => setNextWinValue(e.target.value)} sx={{'& .MuiInputBase-input': {color: '#DEEFFF',}}} focused />
 				<Button variant="contained" color="warning" onClick={() => setTotalWinnings(totalWinnings + parseInt(uploadFunds))}>Find Minimum Win</Button>
-			</TextButtonBox>
+			</TextButtonBox> */}
 			{gameStateChanger && (
         <Overlay>
           <ImageBox>
